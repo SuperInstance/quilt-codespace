@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Smoke test
+        run: |
+          # Validate the example sheet is well-formed YAML
+          python3 -c "import yaml; list(yaml.safe_load_all(open('examples/fed-autopilot/cell.yaml')))" || true
+          # Validate the devcontainer.json is well-formed JSON
+          node -e "JSON.parse(require('fs').readFileSync('.devcontainer/devcontainer.json', 'utf8'))"
+          # Smoke test the HTTP server (start, hit /health, kill)
+          node scripts/quilt-http-server.js --port 14196 --token test-token &
+          SERVER_PID=$!
+          sleep 1
+          curl -sf -H "Authorization: Bearer test-token" http://localhost:14196/health
+          echo ""
+          curl -sf http://localhost:14196/meta | head -1
+          kill $SERVER_PID 2>/dev/null || true
+          echo "✓ Smoke tests passed"

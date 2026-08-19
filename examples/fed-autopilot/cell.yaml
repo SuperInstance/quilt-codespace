@@ -1,0 +1,134 @@
+# Fed Autopilot — A 3-tier Quilt stack demonstrating the federation
+# pattern. Each tier is a separate Quilt instance. The cells here are
+# the "projection" — the cells that exist on this Codespace, but
+# subscribe to remote cells on a Jetson and an ESP32.
+#
+# This sheet runs on the Codespace (the brain). It pulls sensor data
+# from the Jetson, derives higher-level state, and pushes tunables
+# back down to the ESP32.
+
+id: fed-autopilot
+version: "0.1.0"
+title: "Fed Autopilot — Codespace tier"
+description: "3-tier federation example. Runs on the Codespace, pulls from a Jetson, and pushes back to an ESP32."
+
+axes:
+  rows: { name: state }
+  cols: { name: source }
+
+cells:
+
+  # ── Remote cell references (subscribed from siblings) ────────
+  # The @remote: directive tells the engine to subscribe to the cell
+  # at the given URI. The value updates whenever the remote cell
+  # changes.
+  - id: remote.rudder_angle
+    kind: value
+    description: "Pulled from quilt://esp32-fleet/boat#sensor.rudder"
+    value: 0.0
+    metadata:
+      remote: "quilt://esp32-fleet/boat#sensor.rudder"
+
+  - id: remote.compass_heading
+    kind: value
+    description: "Pulled from quilt://esp32-fleet/boat#sensor.compass"
+    value: 0.0
+    metadata:
+      remote: "quilt://esp32-fleet/boat#sensor.compass"
+
+  - id: remote.wind_direction
+    kind: value
+    description: "Pulled from quilt://jetson-lab/perception#vision.wind"
+    value: 0.0
+    metadata:
+      remote: "quilt://jetson-lab/perception#vision.wind"
+
+  - id: remote.wind_speed
+    kind: value
+    description: "Pulled from quilt://jetson-lab/perception#vision.wind_speed"
+    value: 0.0
+    metadata:
+      remote: "quilt://jetson-lab/perception#vision.wind_speed"
+
+  - id: remote.obstacles
+    kind: value
+    description: "Pulled from quilt://jetson-lab/perception#vision.obstacles"
+    value: []
+    metadata:
+      remote: "quilt://jetson-lab/perception#vision.obstacles"
+
+  # ── Local state derived from remote cells ─────────────────────
+  - id: state.course_error
+    kind: formula
+    expr: "=((remote.compass_heading - state.desired_heading + 540) % 360) - 180"
+    description: "Signed course error in degrees (-180 to +180)"
+
+  - id: state.wind_error
+    kind: formula
+    expr: "=((remote.wind_direction - state.desired_heading + 540) % 360) - 180"
+    description: "Signed wind angle error"
+
+  # ── Local AI cell (uses z.ai for anomaly detection) ──────────
+  - id: ai.anomaly_score
+    kind: ai
+    ai_kind: classify
+    prompt: |
+      You are monitoring a boat autopilot. Given the current state,
+      rate how anomalous the situation is on a scale of 0.0 to 1.0.
+
+      Course error: {{state.course_error}} degrees
+      Wind angle:   {{state.wind_error}} degrees
+      Wind speed:   {{remote.wind_speed}} knots
+      Obstacles:    {{remote.obstacles}}
+
+      Respond with just a number between 0.0 (normal) and 1.0 (highly anomalous).
+    description: "Anomaly score from z.ai"
+
+  - id: ai.should_alert
+    kind: formula
+    expr: "=ai.anomaly_score > 0.7"
+    description: "Boolean: should we alert the human?"
+
+  # ── Tunable parameters (pushed to remote ESP32) ──────────────
+  - id: tune.pid_kp
+    kind: value
+    value: 1.2
+    description: "Proportional gain for the rudder PID controller"
+    metadata:
+      remote: "quilt://esp32-fleet/boat#algo.pid_kp"
+
+  - id: tune.pid_ki
+    kind: value
+    value: 0.05
+    description: "Integral gain"
+    metadata:
+      remote: "quilt://esp32-fleet/boat#algo.pid_ki"
+
+  - id: tune.pid_kd
+    kind: value
+    value: 0.4
+    description: "Derivative gain"
+    metadata:
+      remote: "quilt://esp32-fleet/boat#algo.pid_kd"
+
+  - id: tune.deadband
+    kind: value
+    value: 2.0
+    description: "Deadband in degrees — don't act on errors smaller than this"
+    metadata:
+      remote: "quilt://esp32-fleet/boat#actuator.deadband"
+
+  - id: state.desired_heading
+    kind: value
+    value: 90.0
+    description: "Where we want to go (set by the human via the controller)"
+    metadata:
+      remote: "quilt://esp32-fleet/boat#state.desired_heading"
+
+  # ── Audit trace (published to the cloud Quilt for replay) ────
+  - id: audit.last_decision
+    kind: value
+    value: {}
+    description: "Last autopilot decision and its reasoning — published to cloud"
+    metadata:
+      remote: "quilt://cloud-fleet/audit#autopilot.last_decision"

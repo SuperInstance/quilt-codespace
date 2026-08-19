@@ -1,0 +1,41 @@
+{
+  "name": "Quilt Codespace",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [7681, 4096, 8080],
+  "portsAttributes": {
+    "7681": {
+      "label": "Quilt TUI (browser terminal)",
+      "onAutoForward": "openPreview"
+    },
+    "4096": {
+      "label": "Quilt HTTP API (cells)",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Quilt Dashboard",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "containerEnv": {
+    "QUILT_TIER": "codespace",
+    "QUILT_INSTANCE_ID": "codespace-default"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-python.python"
+      ]
+    }
+  }
+}
