@@ -135,3 +135,9 @@ echo "  quilt run <sheet>      # evaluate a sheet, print cell values"
 echo "  quilt validate <file>  # validate a manifest"
 echo "  cat ~/.quilt-env       # see the runtime token"
 echo ""
+
+# ── 8. Oracle PoC (wave-66) — guarded, additive, never fatal ────────────────
+# Builds the deterministic repo-oracle's map, runs its pins, leaves evidence.
+if [ -f oracle/codespace-setup.sh ]; then
+  bash oracle/codespace-setup.sh || warn "oracle setup failed (non-fatal)"
+fi
