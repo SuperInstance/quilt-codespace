@@ -25,6 +25,15 @@ driver/oracle-worker.sh     outside-in driver: create/wait/ssh (--keep) + watch 
 oracle/TASKS.md             claim board with lease (FREEZE-dial semantics)
 oracle/DECOMPOSITION.md     worked example, self-decomposed
 oracle/ADJUSTMENTS.md       the why-ledger (adjustment→cell discipline)
+tools/repo-oracle.mjs       portable history-oracle (66-d): ANY repo, a fixed
+                            battery of 13 read-only probes (git log slices,
+                            file census, receipt/ledger + hash-chain detection,
+                            key-file summaries) → structured answer WITH the
+                            trail (evidence + decomposition), --json, self-test,
+                            session transcripts in docs/oracle-sessions/
+docs/two-agent-pipeline.md  the iteration-pipeline sketch (design only):
+                            A decomposes → B executes → B's diff becomes A's
+                            new evidence, all through versioned files
 ```
 
 ## The three laws of the loop

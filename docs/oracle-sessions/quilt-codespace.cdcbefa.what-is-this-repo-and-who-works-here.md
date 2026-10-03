@@ -1,0 +1,361 @@
+# oracle session — quilt-codespace cdcbefa
+
+- **repo**: /home/z/my-project/quilt-codespace
+- **question**: what is this repo and who works here?
+- **focus**: identity, provenance
+- **tool**: tools/repo-oracle.mjs (deterministic battery, read-only, no model)
+
+## decomposition (the trail)
+
+Question tokens: [and, here, is, repo, this, what, who, works] → focus selected: [identity, provenance] (matched: identity:what|is; provenance:who). The FIXED battery of 13 read-only probes ran in full — every probe, every ask, in declared order. The answer below is composed ONLY from these findings, in this trail order:
+1. census.docs — where the repo writes prose about itself (battery default)
+2. census.files — inventory: what the tree is made of (PROMOTED by focus [identity])
+3. git.authors — who wrote the record (PROMOTED by focus [provenance])
+4. git.heat — which files carry the history (commit touches) (battery default)
+5. git.identity — anchor: which repo state is being spoken about (PROMOTED by focus [provenance])
+6. git.log.genesis — ancestry: where the repo came from (PROMOTED by focus [provenance])
+7. git.log.recent — recency slice: the last thing this repo did (PROMOTED by focus [provenance])
+8. git.state — honesty probe: is the tree clean at interrogation time (battery default)
+9. laws.scan — where the repo states its own rules (law/invariant/never/always/must) (battery default)
+10. ledger.chains — hash-chain custody: tips the repo itself seals (PROMOTED by focus [provenance])
+11. ledger.receipts — detect the repo's receipt/ledger/provenance layer (battery default)
+12. manifest.summary — declared identity: name, version, entry points (PROMOTED by focus [identity])
+13. readme.summary — the repo's self-description, in its own words (PROMOTED by focus [identity])
+
+## answer
+
+Provenance of the current tip: cdcbefa76ee2 on "main" — "oracle: callable git-agent PoC — deterministic repo-oracle + receipted fix-loop…" at 2026-10-02T07:57:06Z, pushed to https://github.com/SuperInstance/quilt-codespace.git. The lineage begins at 7936822 "Initial commit: quilt-codespace v0.1.0" (2026-08-19T19:15:49Z); 4 commits later, the record is continuous.
+
+## evidence (raw probe findings)
+
+### git.identity
+
+```json
+{
+  "head": "cdcbefa76ee225cdcc2d25a7d4499915d14715a0",
+  "branch": "main",
+  "subject": "oracle: callable git-agent PoC — deterministic repo-oracle + receipted fix-loop (wave-66)",
+  "date": "2026-10-02T07:57:06Z",
+  "remote": "https://github.com/SuperInstance/quilt-codespace.git"
+}
+```
+
+### git.log.recent
+
+```json
+{
+  "total_commits": 4,
+  "recent": [
+    {
+      "sha": "cdcbefa",
+      "author": "stitcher",
+      "date": "2026-10-02T07:57:06Z",
+      "subject": "oracle: callable git-agent PoC — deterministic repo-oracle + receipted fix-loop (wave-66)"
+    },
+    {
+      "sha": "1f19ba5",
+      "author": "SuperInstance-agent",
+      "date": "2026-10-01T15:33:46Z",
+      "subject": "overnight sync: local artifacts (auto-push 20261001T153346Z)"
+    },
+    {
+      "sha": "c8355d6",
+      "author": "Quilt Agent",
+      "date": "2026-08-20T17:15:46Z",
+      "subject": "feat: add splash image for repo branding"
+    },
+    {
+      "sha": "7936822",
+      "author": "Quilt Agent",
+      "date": "2026-08-19T19:15:49Z",
+      "subject": "Initial commit: quilt-codespace v0.1.0"
+    }
+  ]
+}
+```
+
+### git.log.genesis
+
+```json
+{
+  "roots": [
+    "7936822648dcdc6ce08bb5e2d7dddc07596135bd"
+  ],
+  "first_commit": {
+    "sha": "7936822",
+    "date": "2026-08-19T19:15:49Z",
+    "subject": "Initial commit: quilt-codespace v0.1.0"
+  }
+}
+```
+
+### git.authors
+
+```json
+{
+  "distinct_authors": 3,
+  "top": [
+    {
+      "name": "Quilt Agent",
+      "commits": 2
+    },
+    {
+      "name": "stitcher",
+      "commits": 1
+    },
+    {
+      "name": "SuperInstance-agent",
+      "commits": 1
+    }
+  ]
+}
+```
+
+### git.heat
+
+```json
+{
+  "touched_paths": 19,
+  "hottest": [
+    {
+      "path": ".devcontainer/post-create.sh",
+      "touches": 2
+    },
+    {
+      "path": ".devcontainer/devcontainer.json",
+      "touches": 2
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "touches": 2
+    },
+    {
+      "path": ".gitignore",
+      "touches": 2
+    },
+    {
+      "path": "README.md",
+      "touches": 2
+    },
+    {
+      "path": "assets/splash.png",
+      "touches": 2
+    },
+    {
+      "path": "examples/fed-autopilot/cell.yaml",
+      "touches": 2
+    },
+    {
+      "path": "ORACLE.md",
+      "touches": 1
+    },
+    {
+      "path": "driver/oracle-worker.sh",
+      "touches": 1
+    },
+    {
+      "path": "oracle/ADJUSTMENTS.md",
+      "touches": 1
+    }
+  ]
+}
+```
+
+### census.files
+
+```json
+{
+  "tracked_files": 19,
+  "by_extension": [
+    {
+      "extension": "sh",
+      "count": 6
+    },
+    {
+      "extension": "md",
+      "count": 6
+    },
+    {
+      "extension": "json",
+      "count": 1
+    },
+    {
+      "extension": "yml",
+      "count": 1
+    },
+    {
+      "extension": "gitignore",
+      "count": 1
+    },
+    {
+      "extension": "png",
+      "count": 1
+    },
+    {
+      "extension": "yaml",
+      "count": 1
+    },
+    {
+      "extension": "py",
+      "count": 1
+    }
+  ],
+  "top_dirs": [
+    {
+      "dir": "(root)",
+      "count": 3
+    },
+    {
+      "dir": ".devcontainer/devcontainer.json",
+      "count": 1
+    },
+    {
+      "dir": ".devcontainer/post-create.sh",
+      "count": 1
+    },
+    {
+      "dir": ".github/workflows",
+      "count": 1
+    },
+    {
+      "dir": "assets/splash.png",
+      "count": 1
+    },
+    {
+      "dir": "driver/oracle-worker.sh",
+      "count": 1
+    },
+    {
+      "dir": "examples/fed-autopilot",
+      "count": 1
+    },
+    {
+      "dir": "oracle/ADJUSTMENTS.md",
+      "count": 1
+    }
+  ]
+}
+```
+
+### census.docs
+
+```json
+{
+  "doc_files": 6,
+  "readmes": [
+    "README.md"
+  ],
+  "docs_sample": [
+    "ORACLE.md",
+    "README.md",
+    "oracle/ADJUSTMENTS.md",
+    "oracle/DECOMPOSITION-draft.md",
+    "oracle/DECOMPOSITION.md",
+    "oracle/TASKS.md"
+  ]
+}
+```
+
+### ledger.receipts
+
+```json
+{
+  "receipt_like_files": 0,
+  "sample": [],
+  "groups": []
+}
+```
+
+### ledger.chains
+
+```json
+{
+  "chain_shaped_files": 0,
+  "chains": []
+}
+```
+
+### readme.summary
+
+```json
+{
+  "file": "README.md",
+  "lines": [
+    "# 🌐 Quilt Codespace",
+    "> A GitHub Codespace that runs Quilt as a live, token-authenticated, federated runtime. TUI in the browser. HTTP API for IoT. Subscribes to…",
+    "",
+    "",
+    "",
+    "```",
+    "┌─────────────────────────────────────────────────────────────┐",
+    "│ GitHub Codespace │",
+    "│ ┌─────────────┐ ┌──────────────┐ ┌──────────────────┐ │",
+    "│ │ ttyd :7681 │ │ HTTP :4096 │ │ Dashboard :8080 │ │"
+  ]
+}
+```
+
+### manifest.summary
+
+```json
+{
+  "kind": "none"
+}
+```
+
+### laws.scan
+
+```json
+{
+  "scanned_files": 6,
+  "law_statements": [
+    {
+      "ref": "README.md:129",
+      "text": "| Lighthouse (always-on) | `codespace` persistent | this repo + external storage |"
+    },
+    {
+      "ref": "ORACLE.md:30",
+      "text": "## The three laws of the loop"
+    },
+    {
+      "ref": "ORACLE.md:37",
+      "text": "2. **No silent adjustments.** A failed attempt must append its WHY to"
+    },
+    {
+      "ref": "oracle/ADJUSTMENTS.md:4",
+      "text": "adjustment→cell discipline: never adjust silently; each why is a candidate"
+    },
+    {
+      "ref": "oracle/DECOMPOSITION.md:15",
+      "text": "| c3 | TEST | run `bash oracle/self-test.sh` (pins must stay green) | c2 |"
+    },
+    {
+      "ref": "oracle/DECOMPOSITION.md:18",
+      "text": "## Invariants the loop enforces"
+    },
+    {
+      "ref": "oracle/DECOMPOSITION.md:24",
+      "text": "4. Rewind law: receipts are append-only; nothing is ever deleted, a failed"
+    },
+    {
+      "ref": "oracle/TASKS.md:7",
+      "text": "Never delete rows — append-only, the board is the history."
+    }
+  ]
+}
+```
+
+### git.state
+
+```json
+{
+  "dirty_entries": 2,
+  "dirty_sample": [
+    "?? docs/",
+    "?? tools/"
+  ],
+  "local_branches": 1,
+  "tags": 0
+}
+```
+
