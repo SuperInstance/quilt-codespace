@@ -145,3 +145,19 @@ For Quilt, the tiers map to:
 ## License
 
 Apache 2.0
+
+## Documentation (wave-69)
+
+Full-knowledge package — route by audience:
+
+- New agent, zero context: [`docs/ONBOARDING.md`](./docs/ONBOARDING.md) — identity, the
+  oracle PoC, verify-it-works commands, gotchas (fallback engine, token handling),
+  open frontier.
+- End user of the runtime/oracle: [`docs/USER-GUIDE.md`](./docs/USER-GUIDE.md) — first
+  success in 5 minutes, everyday oracle/runtime recipes, troubleshooting table, FAQ.
+- Developer extending the server or oracle: [`docs/DEVELOPER-GUIDE.md`](./docs/DEVELOPER-GUIDE.md)
+  — code layout, the three laws, receipt-chain and battery concepts, extension recipes.
+- Engineer operating/reviewing it: [`docs/ENGINEERING-NOTES.md`](./docs/ENGINEERING-NOTES.md)
+  — architecture diagram, invariants, failure modes, cost envelope, design decisions.
+- Executive: [`docs/CTO-BRIEF.md`](./docs/CTO-BRIEF.md) — value, maturity, risks, options.
+- Index of all deeper knowledge: [`docs/KNOWLEDGE-MAP.md`](./docs/KNOWLEDGE-MAP.md).
